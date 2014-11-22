@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>App Title</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/bootstrap.min.css') }}" media="screen">
+    </head>
+
+    <body>
+        <header>
+            <div class="container">
+                <h1 class="logo">App Title</h1>
+                <hav>
+                    {% if 'user' in session %}
+                        <a href="{{ url_for('users.logout')}}">Logout</a>
+                    {% else %}
+                        <a href="{{ url_for('users.login') }}">Login</a>
+                    {% endif %}
+                </hav>
+            </div>
+        </header>
+
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories = True) %}
+                {% if messages %}
+                    <div class="flashes">
+                        <ul>
+                            {% for category, message in messages %}
+                                <div class='{{ category }}'>{{message }} </div>div>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+
+            {% block content %}
+            {% endblock %}
+
+        </div>
+    </body>
+</html>

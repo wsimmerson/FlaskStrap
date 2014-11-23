@@ -6,7 +6,10 @@ from flask.ext.migrate import Migrate, MigrateCommand
 
 from project import app, db
 
-app.config.from_object(os.environ['APP_SETTINGS'])
+try:
+	app.config.from_object(os.environ['APP_SETTINGS'])
+except KeyError:
+	app.config.from_object('config.DevelopmentConfig')
 
 migrate = Migrate(app, db)
 manager = Manager(app)
@@ -14,7 +17,7 @@ manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
 
-@manager.add_command
+@manager.command
 def test():
     """Runs the unit tests"""
     tests = unittest.TestLoader().discover('.')

@@ -11,7 +11,12 @@ import os
 #################
 
 app = Flask(__name__)
-app.config.from_object(os.environ['APP_SETTINGS'])
+
+try:
+	app.config.from_object(os.environ['APP_SETTINGS'])
+except KeyError:
+	app.config.from_object('config.DevelopmentConfig')
+
 db = SQLAlchemy(app)
 
 

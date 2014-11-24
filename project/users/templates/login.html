@@ -7,7 +7,7 @@
     {{ form.csrf_token }}
     <p>
     {{ form.email(placeholder="E-Mail") }}
-    <span class="danger">
+    <span class="text-danger">
         {% if form.email.errors %}
             {% for error in form.email.errors %}
                 {{ error}}
@@ -17,7 +17,7 @@
     </p>
 
     <p>{{ form.password(placeholder="password") }}
-        <span class="danger">
+        <span class="text-danger">
         {% if form.password.errors %}
             {% for error in form.password.errors %}
                 {{ error }}

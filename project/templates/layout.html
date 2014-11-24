@@ -2,40 +2,70 @@
 <html>
     <head>
         <title>App Title</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" media="screen">
         <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" media="screen">
+        <script src="{{ url_for('static', filename='vendor/jquery/jquery-2.1.1.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
     </head>
 
     <body>
-        <header>
+        <header class="divide-bottom">
             <div class="container">
-                <h1 class="logo">App Title</h1>
-                <hav>
-                    {% if 'user_id' in session %}
-                        <a href="{{ url_for('users.logout') }}">Logout</a>
-                    {% else %}
-                        <a href="{{ url_for('users.login') }}">Login</a>
-                    {% endif %}
-                </hav>
+                    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#">App Title</a>
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a href="{{ url_for('home.dashboard') }}">Dashboard</a>
+                                </li>
+                                
+                                {% if 'user_id' in session %}
+                                <li>
+                                    <a href="{{ url_for('users.logout') }}">
+                                        <span class='glyphicon glyphicon-log-out' title='Log Out'></span>
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a href="{{ url_for('users.login') }}">
+                                        <span class='glyphicon glyphicon-log-in' title='Log In'></span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>            
             </div>
         </header>
 
         <div class="container">
-            {% with messages = get_flashed_messages(with_categories = True) %}
-                {% if messages %}
-                    <div class="flashes">
-                        <ul>
-                            {% for category, message in messages %}
-                                <div class='{{ category }}'>{{message }} </div>
+            <div class="flashes">
+                {% with messages = get_flashed_messages(with_categories = True) %}
+                    {% if messages %}                        
+                        {% for category, message in messages %}
+                            <p class='bg-{{ category }}'>{{ message }} </p>
+                        {% endfor %}                         
+                    {% endif %}
+                {% endwith %}
+                {% if form %}
+                    {% if form.errors %}
+                        {% for field, error in form.errors.items() %}
+                            {% for e in error %}
+                                <p class='bg-danger'> {{ e }}</p>
                             {% endfor %}
-                        </ul>
-                    </div>
+                        {% endfor %}
+                    {% endif %}
                 {% endif %}
-            {% endwith %}
+            </div>
 
-
-            {% block content %}
-            {% endblock %}
-
+                {% block content %}
+                {% endblock %}
+            
         </div>
     </body>
 </html>

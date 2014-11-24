@@ -37,3 +37,17 @@ class UpdatePasswordForm(Form):
     confirm_new_password = PasswordField('Confirm New Password', validators=[
         DataRequired(message='Massword must be confirmed.'),
         EqualTo('new_password', message='Passwords must match.')])
+
+
+class UpdateForm(Form):
+    name = TextField('Display Name', validators=[
+        DataRequired(message='Display Name is required!')])
+    email = TextField('E-Mail', validators=[
+        DataRequired(message='Email is required'),
+        Email()])
+    role = SelectField('Role', choices=[
+        (role, role) for role in User.available_roles
+    ])
+    password = PasswordField('Password')
+    password_confirm = PasswordField('Confirm Password', validators=[
+        EqualTo('password', message='Passwords must match.')])

@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h3>Edit User</h3>
+<br>
+
+<div class='col-md-5'>
+    <form name="edit_form" method="POST" action ="">
+        {{ form.csrf_token }}
+
+        <table class='table table-condensed table-striped'>
+            <tr>
+                <td>{{ form.name.label }}</td>
+                <td>{{ form.name }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.email.label }}</td>
+                <td>{{ form.email }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.role.label }}</td>
+                <td>{{ form.role }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.password.label}}</td>
+                <td>{{ form.password }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.password_confirm.label }}</td>
+                <td>{{ form.password_confirm }}</td>
+            </tr>
+        </table>
+        <button class="btn btn-sm btn-success" type="submit">Update User</button>
+    </form>
+</div>
+
+{% endblock %}

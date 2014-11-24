@@ -5,7 +5,7 @@ from hashlib import md5
 from flask import flash, redirect, render_template, request, url_for, \
     Blueprint, session
 
-from .forms import LoginForm, CreateForm, UpdatePasswordForm
+from .forms import LoginForm, CreateForm, UpdatePasswordForm, UpdateForm
 from project import db
 from project.models import User
 from project.auth import login_required, admin_only
@@ -38,13 +38,13 @@ def login():
 @login_required
 def logout():
     session.clear()
-    flash('You have logged out!', 'notice')
+    flash('You have logged out!', 'success')
     return redirect(url_for('home.index'))
 
 
 @user_bp.route('/create', methods=['GET', 'POST'])
-@admin_only
 @login_required
+@admin_only
 def create():
     form = CreateForm(request.form)
     if request.method == 'POST':
@@ -90,3 +90,33 @@ def profile(userid):
         return render_template("profile.html",
                                user=user,
                                email_hash=email_hash)
+
+
+@user_bp.route('/edit/<int:userid>', methods=['GET', 'POST'])
+@login_required
+@admin_only
+def edit(userid):
+    user = User.query.get(userid)
+    form = UpdateForm(request.form, user)
+    if request.method == 'POST' and form.validate():
+        user.name = form.name.data
+
+        # verify email is only used by this user
+        check_email = User.query.filter_by(email=form.email.data).all()
+        valid_email = True
+        for c in check_email:
+            if c.id != userid:
+                valid_email = False
+        if valid_email:
+            user.email = form.email.data
+
+        user.role = form.role.data
+        if form.password.data == form.password_confirm.data and len(
+                form.password.data) >= 1:
+            user.update_password(form.password.data)
+
+        db.session.add(user)
+        db.session.commit()
+        flash('User has been updated', 'success')
+
+    return render_template("edit.html", form=form)

@@ -7,11 +7,6 @@ from flask.ext.migrate import Migrate, MigrateCommand
 from project import app, db
 from project.models import User
 
-try:
-	app.config.from_object(os.environ['APP_SETTINGS'])
-except KeyError:
-	app.config.from_object('config.DevelopmentConfig')
-
 
 migrate = Migrate(app, db)
 manager = Manager(app)
@@ -28,6 +23,7 @@ def test():
 @manager.command
 def seed():
 	"""insert default data"""
+	print(app.config['SQLALCHEMY_DATABASE_URI'])
 	db.session.add(User("admin", "admin@example.com", "admin", "admin"))
 	db.session.commit()
 

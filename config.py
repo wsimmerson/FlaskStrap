@@ -1,8 +1,9 @@
+import os
 
 class BaseConfig:
     DEBUG = False
     SECRET_KEY = 'And now for something completely different'
-    SQLALCHEMY_DATABASE_URI = ''
+    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 
 class TestConfig(BaseConfig):
@@ -14,7 +15,8 @@ class TestConfig(BaseConfig):
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///development.db'
+    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'development.db')
 
 
 class ProductionConfig(BaseConfig):

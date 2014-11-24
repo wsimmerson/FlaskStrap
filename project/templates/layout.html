@@ -19,20 +19,23 @@
                         <div class="navbar-collapse collapse">
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
-                                    <a href="{{ url_for('home.dashboard') }}">Dashboard</a>
+                                    <a href="{{ url_for('home.dashboard') }}">Dashboard</a>                                   
                                 </li>
                                 
                                 {% if 'user_id' in session %}
-                                <li>
-                                    <a href="{{ url_for('users.profile', userid=session['user_id']) }}">
-                                    <span class='glyphicon glyphicon-cog' title='Profile'></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ url_for('users.logout') }}">
-                                        <span class='glyphicon glyphicon-log-out' title='Log Out'></span>
-                                    </a>
-                                </li>
+                                    {% if session['user_role'] == 'admin' %}
+                                        {% include "helpers/admin-menu.html" %}
+                                    {% endif %}
+                                    <li>
+                                        <a href="{{ url_for('users.profile', userid=session['user_id']) }}">
+                                        <span class='glyphicon glyphicon-cog' title='Profile'></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('users.logout') }}">
+                                            <span class='glyphicon glyphicon-log-out' title='Log Out'></span>
+                                        </a>
+                                    </li>
                                 {% else %}
                                 <li>
                                     <a href="{{ url_for('users.login') }}">

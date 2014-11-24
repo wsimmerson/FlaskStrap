@@ -27,6 +27,7 @@ def login():
                     request.form['password']) and user.role != 'disabled':
                 session['user_id'] = user.id
                 session['user_name'] = user.name
+                session['user_role'] = user.role
                 flash('You have successfully logged in!', 'success')
                 return redirect(url_for('home.dashboard'))
             else:
@@ -120,3 +121,11 @@ def edit(userid):
         flash('User has been updated', 'success')
 
     return render_template("edit.html", form=form)
+
+
+@user_bp.route('/list')
+@login_required
+@admin_only
+def list():
+    users = User.query.order_by(User.role).all()
+    return render_template("list.html", users=users)

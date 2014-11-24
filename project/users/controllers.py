@@ -8,7 +8,7 @@ from flask import flash, redirect, render_template, request, url_for, \
 from .forms import LoginForm, CreateForm, UpdatePasswordForm
 from project import db
 from project.models import User
-from project.auth import login_required
+from project.auth import login_required, admin_only
 
 
 # Config
@@ -43,30 +43,25 @@ def logout():
 
 
 @user_bp.route('/create', methods=['GET', 'POST'])
+@admin_only
 @login_required
 def create():
-    # Admin users only
-    current_user = User.query.filter_by(id=session['user_id']).first()
-    if current_user.role != 'admin':
-        flash("ACCESS DENIED!", 'danger')
-        return redirect(url_for('home.index'))
-    else:
-        form = CreateForm(request.form)
-        if request.method == 'POST':
-            if form.validate():
-                user = User.query.filter_by(
-                    email=request.form['email']).first()
-                if user is None:
-                    new_user = User(name=form.name.data,
-                                    email=form.email.data,
-                                    password=form.password.data,
-                                    role=form.role.data)
-                    db.session.add(new_user)
-                    db.session.commit()
-                    flash('User created!', 'success')
-                    return redirect(url_for('home.index'))
-                else:
-                    flash('That email is already in use!', 'danger')
+    form = CreateForm(request.form)
+    if request.method == 'POST':
+        if form.validate():
+            user = User.query.filter_by(
+                email=request.form['email']).first()
+            if user is None:
+                new_user = User(name=form.name.data,
+                                email=form.email.data,
+                                password=form.password.data,
+                                role=form.role.data)
+                db.session.add(new_user)
+                db.session.commit()
+                flash('User created!', 'success')
+                return redirect(url_for('home.index'))
+            else:
+                flash('That email is already in use!', 'danger')
         return render_template("create.html", form=form)
 
 

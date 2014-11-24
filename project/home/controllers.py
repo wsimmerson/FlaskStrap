@@ -12,7 +12,7 @@ home_bp = Blueprint('home', __name__, template_folder='templates')
 
 # routes
 @home_bp.route('/')
-def home():
+def index():
     return render_template('index.html')
 
 

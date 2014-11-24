@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h3>Create a new User</h3>
+<br>
+{% if form.errors %}
+    {% for field, error in form.errors.items() %}
+        {% for e in error %}
+            <div class='danger'> {{ e }}</div>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
+<form name="create_form" method="POST" action="">
+{{ form.csrf_token }}
+    <div>{{ form.name.label }} {{ form.name }}</div>
+    <div>{{ form.email.label }} {{ form.email }}</div>
+    <div>{{ form.role.label }} {{ form.role }}</div>
+    <div>
+        {{ form.password.label }} {{ form.password }}<br>
+        {{ form.password_confirm.label }} {{ form.password_confirm }}
+    </div>
+    <button class="btn btn-sm btn-success" type="submit">Create User</button>
+</form>
+
+{% endblock %}

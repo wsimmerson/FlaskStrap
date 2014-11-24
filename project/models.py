@@ -13,6 +13,8 @@ class User(db.Model):
     password = db.Column(db.String)
     role = db.Column(db.String, nullable=False)
 
+    available_roles = ['admin', 'user', 'disabled']
+
     def __init__(self, name, email, password, role):
         self.name = name
         self.email = email
@@ -27,6 +29,3 @@ class User(db.Model):
 
     def isAdmin(self):
         return self.role == 'admin'
-
-    def available_roles(self):
-        return ['admin', 'user', 'disabled']

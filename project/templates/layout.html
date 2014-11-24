@@ -10,8 +10,8 @@
             <div class="container">
                 <h1 class="logo">App Title</h1>
                 <hav>
-                    {% if 'user' in session %}
-                        <a href="{{ url_for('users.logout')}}">Logout</a>
+                    {% if 'user_id' in session %}
+                        <a href="{{ url_for('users.logout') }}">Logout</a>
                     {% else %}
                         <a href="{{ url_for('users.login') }}">Login</a>
                     {% endif %}
@@ -25,7 +25,7 @@
                     <div class="flashes">
                         <ul>
                             {% for category, message in messages %}
-                                <div class='{{ category }}'>{{message }} </div>div>
+                                <div class='{{ category }}'>{{message }} </div>
                             {% endfor %}
                         </ul>
                     </div>

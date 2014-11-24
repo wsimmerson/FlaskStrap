@@ -62,7 +62,7 @@ def create():
                 return redirect(url_for('home.index'))
             else:
                 flash('That email is already in use!', 'danger')
-        return render_template("create.html", form=form)
+    return render_template("create.html", form=form)
 
 
 @user_bp.route('/profile/<int:userid>', methods=['GET', 'POST'])

@@ -21,7 +21,7 @@ def login():
         if form.validate_on_submit():
             user = User.query.filter_by(email=request.form['email']).first()
             if user is not None and user.authenticate(
-                    request.form['password']) and user.role is not 'disabled':
+                    request.form['password']) and user.role != 'disabled':
                 session['user_id'] = user.id
                 session['user_name'] = user.name
                 flash('You have successfully logged in!', 'notice')

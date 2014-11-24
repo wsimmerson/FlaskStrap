@@ -27,3 +27,13 @@ class CreateForm(Form):
     password_confirm = PasswordField('Confirm Password', validators=[
         DataRequired(message='Password must be confirmed'),
         EqualTo('password', message='Passwords must match.')])
+
+
+class UpdatePasswordForm(Form):
+    old_password = PasswordField('Old Password', validators=[
+        DataRequired(message='Password is required!')])
+    new_password = PasswordField('New Password', validators=[
+        DataRequired(message='New Password is required')])
+    confirm_new_password = PasswordField('Confirm New Password', validators=[
+        DataRequired(message='Massword must be confirmed.'),
+        EqualTo('new_password', message='Passwords must match.')])

@@ -27,5 +27,8 @@ class User(db.Model):
     def authenticate(self, password_to_check):
         return check_password_hash(self.password, password_to_check)
 
+    def update_password(self, new_password):
+        self.password = generate_password_hash(new_password)
+
     def isAdmin(self):
         return self.role == 'admin'

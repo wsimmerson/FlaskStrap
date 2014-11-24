@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class='row'>
+    <div class='col-md-2'>
+        <img src="http://gravatar.com/avatar/{{email_hash}}">
+    </div>
+    <div class='col-md-2'>
+        <address>
+            <strong>{{ user.name }}</strong><br>
+            {{ user.email }}
+        </address>
+    </div>
+
+    {% if form %}
+    <div class='col-md-4'>
+        <form name="create_form" method="POST" action="">
+        {{ form.csrf_token }}
+            <table class='table'>
+                <tr>
+                    <td>{{ form.old_password.label }}</td>            
+                    <td>{{ form.old_password }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.new_password.label }}</td>
+                    <td>{{ form.new_password }} </td>
+                </tr>
+                <tr>
+                    <td>{{ form.confirm_new_password.label }}</td>
+                    <td>{{ form.confirm_new_password }}</td>
+                </tr>
+            </table>
+            <button class="btn btn-sm btn-success" type="submit">Update Password</button>
+        </form>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -60,7 +60,7 @@ def create():
                 db.session.add(new_user)
                 db.session.commit()
                 flash('User created!', 'success')
-                return redirect(url_for('home.index'))
+                return redirect(url_for('users.list'))
             else:
                 flash('That email is already in use!', 'danger')
     return render_template("create.html", form=form)

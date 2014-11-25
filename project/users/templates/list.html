@@ -2,14 +2,40 @@
 
 {% block content %}
 
-<table class='table table-condensed table-striped'>
-{% for user in users %}
-    <tr>
-        <td>{{ user.name }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.role }}</td>
-    </tr>
-{% endfor %}
-</table>
+<h3>Administer Users</h3>
+<br>
+<div class='col-md-10'>
+	<table class='table table-condensed table-striped'>
+	{% for user in users %}
+	    <tr>
+	        <td>{{ user.name }}</td>
+	        <td>{{ user.email }}</td>
+	        <td>{{ user.role }}</td>
+	        <td>
+	        <td>
+	            <a href="{{ url_for('users.profile', userid=user.id) }}">
+		        	<button type="button" class="btn btn-default btn-sm btn-success" title="View Profile">
+					  <span class="glyphicon glyphicon-eye-open"></span> 
+					</button>
+				</a>
+	            <a href="{{ url_for('users.edit', userid=user.id) }}">
+		        	<button type="button" class="btn btn-default btn-sm btn-primary" title="Edit User">
+					  <span class="glyphicon glyphicon-wrench"></span> </button>
+				</a>
+	        	<a href="#">
+		        	<button type="button" class="btn btn-default btn-sm btn-danger" title="Delete User">
+					  <span class="glyphicon glyphicon-trash"></span> </button>
+				</a>
+			</td>
+	    </tr>
+	{% endfor %}
+	</table>
+		<a href="{{ url_for('users.create') }}">
+			<button type="button" class="btn btn-default btn-sm btn-primary">
+				<span></span>
+				New User
+			</button>
+		</a>
+</div>
 
 {% endblock %}

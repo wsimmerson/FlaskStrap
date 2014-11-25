@@ -38,5 +38,5 @@ def not_found(error):
 @app.errorhandler(500)
 def indernal_error(error):
     db.session.rollback()
-    flash("An unexpected error has occured.  The administrator has been notified", "error")
-    return render_template('404.html'), 500
+    flash("An unexpected error has occured.  The administrator has been notified", "danger")
+    return render_template('500.html'), 500

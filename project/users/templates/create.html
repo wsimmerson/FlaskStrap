@@ -5,17 +5,33 @@
 <h3>Create a new User</h3>
 <br>
 
-
-<form name="create_form" method="POST" action="">
-{{ form.csrf_token }}
-    <div>{{ form.name.label }} {{ form.name }}</div>
-    <div>{{ form.email.label }} {{ form.email }}</div>
-    <div>{{ form.role.label }} {{ form.role }}</div>
-    <div>
-        {{ form.password.label }} {{ form.password }}<br>
-        {{ form.password_confirm.label }} {{ form.password_confirm }}
-    </div>
-    <button class="btn btn-sm btn-success" type="submit">Create User</button>
-</form>
+<div class='col-md-5'>
+	<form name="create_form" method="POST" action="">
+	{{ form.csrf_token }}
+	        <table class='table table-condensed table-striped'>
+	            <tr>
+	                <td>{{ form.name.label }}</td>
+	                <td>{{ form.name }}</td>
+	            </tr>
+	            <tr>
+	                <td>{{ form.email.label }}</td>
+	                <td>{{ form.email }}</td>
+	            </tr>
+	            <tr>
+	                <td>{{ form.role.label }}</td>
+	                <td>{{ form.role }}</td>
+	            </tr>
+	            <tr>
+	                <td>{{ form.password.label}}</td>
+	                <td>{{ form.password }}</td>
+	            </tr>
+	            <tr>
+	                <td>{{ form.password_confirm.label }}</td>
+	                <td>{{ form.password_confirm }}</td>
+	            </tr>
+	        </table>
+	        <button class="btn btn-sm btn-success" type="submit">Create User</button>
+	</form>
+</div>
 
 {% endblock %}

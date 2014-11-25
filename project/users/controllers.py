@@ -70,6 +70,10 @@ def create():
 @login_required
 def profile(userid):
     user = User.query.get(userid)
+
+    if user is None:
+        return render_template('404.html')
+
     email_hash = md5(user.email.encode('utf-8')).hexdigest()
     if session['user_id'] == userid:
         form = UpdatePasswordForm(request.form)
@@ -98,6 +102,10 @@ def profile(userid):
 @admin_only
 def edit(userid):
     user = User.query.get(userid)
+
+    if user is None:
+        return render_template('404.html')
+
     form = UpdateForm(request.form, user)
     if request.method == 'POST' and form.validate():
         user.name = form.name.data
@@ -129,3 +137,18 @@ def edit(userid):
 def list():
     users = User.query.order_by(User.role).all()
     return render_template("list.html", users=users)
+
+
+@user_bp.route('/delete/<int:userid>')
+@login_required
+@admin_only
+def delete(userid):
+    user = User.query.get(userid)
+
+    if user is None:
+        return render_template('404.html')
+
+    db.session.delete(user)
+    db.session.commit()
+    flash(user.email + ' has been deleted.', 'success')
+    return redirect(url_for('users.list'))

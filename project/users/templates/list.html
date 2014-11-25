@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h3>Administer Users</h3>
+<h3><span class='glyphicon glyphicon-user'> Users</span></h3>
 <br>
 <div class='col-md-10'>
 	<table class='table table-condensed table-striped'>
@@ -22,7 +22,7 @@
 		        	<button type="button" class="btn btn-default btn-sm btn-primary" title="Edit User">
 					  <span class="glyphicon glyphicon-wrench"></span> </button>
 				</a>
-	        	<a href="#">
+	        	<a href="{{ url_for('users.delete', userid=user.id) }}">
 		        	<button type="button" class="btn btn-default btn-sm btn-danger" title="Delete User">
 					  <span class="glyphicon glyphicon-trash"></span> </button>
 				</a>
